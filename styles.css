@@ -1,20 +1,119 @@
 body {
-  font-family: sans-serif;
   margin: 0;
   padding: 16px;
-  background: linear-gradient(to bottom right, #8ed4ff, #c057e0);
+  font-family: sans-serif;
   box-sizing: border-box;
+  overflow-x: hidden;
+  background: linear-gradient(-45deg, #8ed4ff, #c057e0, #7be495, #f3c623, #a18cd1,
+  #fcb69f,
+  #96e6a1);
+  background-size: 800% 800%;
+  animation: gradientBG 20s ease infinite;
 }
 
+/* Particle Canvas (Floating Glowing Particles) */
+#particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+
+/* Interactive Star Background (Particles.js) */
+#particles-js {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  top: 0;
+  left: 0;
+}
+
+body, .headers, .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Animation Keyframes */
+@keyframes gradientBG {
+  0%   { background-position: 0% 50%; }
+  25%  { background-position: 50% 100%; }
+  50%  { background-position: 100% 50%; }
+  75%  { background-position: 50% 0%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Headers */
 .headers {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 16px;
   margin-bottom: 16px;
+  animation: fadeInUp 0.8s ease forwards;
+  opacity: 0;
+  animation-delay: 0.2s;
 }
 
+/* Hover effect on day cards */
+.day-card {
+  margin-bottom: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.day-card:hover {
+  transform: scale(1.02);
+}
+
+/* Hover effect on Save button */
+.save-question-btn {
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.save-question-btn:hover {
+  transform: scale(1.05);
+  background-color: #1daabf;
+}
+
+/* Progress Bar */
+/* .progress-container {
+  width: 100%;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 8px;
+  height: 20px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+} */
+
+/* .progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #27b7ca, #7be495);
+  width: 0%;
+  transition: width 0.4s ease-in-out;
+  border-radius: 10px 0 0 10px;
+} */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* General Styles for Box, Headers, and Tasks */
 .user-header {
-  background: #27b7ca;
+  background: 255,255,255, 0.9;
   padding: 12px 16px;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -29,27 +128,21 @@ body {
 
 .container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 2fr));
+  gap: 46px;
 }
+
+
 
 .box {
-  background: white;
-  padding: 16px;
+  /* background: rgba(255, 255, 255, 0.9); */
+  padding: 20px;
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   max-height: 80vh;
   overflow-y: auto;
-}
-
-.day-card {
-  background: #f9fafb;
-  margin-bottom: 12px;
-  padding: 12px;
-  border-radius: 12px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-  transition: background-color 0.3s ease;
-}
+  scroll-behavior: smooth;
+} 
 
 .day-title {
   font-weight: 600;
@@ -58,11 +151,20 @@ body {
 }
 
 .task {
-  display: inline-block;
-  margin-right: 10px;
-  margin-bottom: 4px;
+  display: inline-flex; /* Use inline-flex for better alignment */
+  align-items: center;  /* Vertically align text and checkbox */
+  margin-right: 16px;   /* Increase spacing between tasks */
+  margin-bottom: 8px;   /* Add more space below each task */
   font-size: 0.9rem;
+  color: #333;          /* Set a default text color */
+  transition: transform 0.3s ease, color 0.3s ease; /* Smooth transition for hover effect */
 }
+
+.task:hover {
+  transform: scale(1.05); /* Slightly enlarge task on hover */
+  color: #1daabf; /* Change text color on hover */
+}
+
 
 .task input {
   margin-right: 4px;
@@ -96,51 +198,31 @@ body {
 }
 
 .summary-box {
-  background: white;
+  background: transparent ;
   padding: 12px;
   margin-bottom: 12px;
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   font-size: 0.95rem;
   color: #333;
-}
-/* Animation Keyframes */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  border: 12px rgb(240, 21, 21);
+  /* text-align:center; */
+  font-weight: 600;
 }
 
-/* Apply animations on page load */
-.headers, .container > div {
-  animation: fadeInUp 0.8s ease forwards;
-  opacity: 0;
-  animation-delay: 0.2s;
+.box::-webkit-scrollbar {
+  width: 8px;
 }
 
-/* Hover effect on day cards */
-.day-card {
-  transition: transform 0.2s ease, background-color 0.3s ease;
+.box::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1); 
+  border-radius: 10px;
 }
 
-.day-card:hover {
-  transform: scale(1.02);
+.box::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
 }
 
-/* Hover effect on Save button */
-.save-question-btn {
-  transition: transform 0.2s ease, background-color 0.3s ease;
-}
-
-.save-question-btn:hover {
-  transform: scale(1.05);
-  background-color: #1daabf;
-}
 
 
 @media (max-width: 480px) {
@@ -159,4 +241,4 @@ body {
   .user-header {
     font-size: 0.9rem;
   }
-}
+} 

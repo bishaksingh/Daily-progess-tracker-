@@ -6,8 +6,16 @@
   <title>Daily Tracker</title>
   <link rel="icon" href="https://e7.pngegg.com/pngimages/398/1016/png-clipart-task-manager-task-management-action-item-tasks-together-orange-logo-thumbnail.png" type="image/png" />
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Particles.js library -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 </head>
 <body>
+  <!-- Floating Glowing Particles Canvas -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Interactive Star Background -->
+  <div id="particles-js"></div>
 
   <!-- User headers for BO 1 and BO 2 -->
   <div class="headers">
@@ -28,17 +36,21 @@
   <!-- Tracker Boxes -->
   <div class="container">
     <div>
-      <div class="summary" id="summary-bo1"></div>
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bo1"></div>
+      </div>
+      <div class="summary" id="summary-bo1"></div> <!-- Default text here -->
       <div class="box" id="bo1"></div>
     </div>
+  
     <div>
-      <div class="summary" id="summary-bo2"></div>
+      <div class="summary" id="summary-bo2"></div> <!-- Default text here -->
       <div class="box" id="bo2"></div>
     </div>
   </div>
 
+  
+  
   <script src="script.js"></script>
-  <canvas id="particle-canvas"></canvas>
-
 </body>
 </html>
